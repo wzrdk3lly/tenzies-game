@@ -1,5 +1,4 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useState } from "react";
 import diceData from "./diceData";
 
 function App() {
@@ -13,40 +12,42 @@ function App() {
  */
 
   // contains diceData array of object. Feature is disabled now
-  console.log(diceData);
-  const [dice, setDiece] = useState(diceData);
+  // console.log(diceData);
+  let [dice, setDice] = useState(diceData);
 
   //  state for the dice
-  const [arrayOfNumbers, setArrayOfNumbers] = useState([]);
+  // const [arrayOfNumbers, setArrayOfNumbers] = useState([]);
 
   // currently this just pulls from an array that we generate.
   // The next feature will need to include iterating theough dice data and setting each of the dice to be
   // a random number
-  function rollEvent() {
-    let arr = [];
-    for (let i = 0; i <= 9; i++) {
-      arr[i] = Math.floor(Math.random() * 11);
-    }
-    setArrayOfNumbers(arr);
+  // useEffect(() => {
+  //   randomizeDice();
+  // }, []);
 
-    arrayOfNumbers;
-
-    console.log(arrayOfNumbers);
+  function getRandomNumber() {
+    return Math.floor(Math.random() * 11);
   }
 
-  // When we want to display all the dice buttons we can just map through the dice state
-  // and set each button to be a dice.number
+  function randomizeDice() {
+    setDice((prevDice) =>
+      prevDice.map((diceObject) => {
+        diceObject.number = getRandomNumber();
+      })
+    );
+    console.log(dice);
+  }
 
-  let diceElements = arrayOfNumbers.map((number) => {
-    // // setDie((prevDie) => {
-    // //   return {
-    // //     ...prevDie,
-    // //     number: number,
-    // //   };
-    // });
+  // On each roll set the dice state to have a random number between 1 -10
+  function rollEvent() {
+    randomizeDice();
+    //  change each dice to have a random number
+  }
+
+  let diceElements = dice.map((die) => {
     return (
       <button className="bg-white rounded-md border-2 border-gray-300 hover:border-purple-500 w-20 h-16 shadow-xl">
-        {number}
+        {die.number}
       </button>
     );
   });
