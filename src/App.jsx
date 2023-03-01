@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import diceData from "./diceData";
+import Dice from "./Dice";
 
 function App() {
   /*
   Todo:
-  [ ] - once we can succesffully roll and randomize the dice, lets move dice to it's on component
-      - we can collect state of the app in the App componennt and then we can pass it down to children 
+  [ ] - Now lets work on builing the freeze funcitonality. 
+    - When a dice is frozne change the state of frozen to true. 
+    - make the color of this dice elememt to be green
+
  */
   // state of the diceData array which is an array of objects
   let [dice, setDice] = useState(diceData);
 
-  let diceElements;
+  // let diceElements;
 
   // On first load randomize the dice
   useEffect(() => {
@@ -24,13 +27,13 @@ function App() {
 
   // Modifies the state of the dice
   function randomizeDice() {
+    // TODO ADD the ability to not randomize a dice when they are frozen
     setDice((prevDice) =>
       prevDice.map((diceObject) => ({
         ...diceObject,
         number: getRandomNumber(),
       }))
     );
-    console.log(dice);
   }
 
   // On each roll set the dice state to have a random number between 1 - 10
@@ -38,13 +41,35 @@ function App() {
     randomizeDice();
   }
 
-  diceElements = dice.map((die) => {
-    return (
-      <button className="bg-white rounded-md border-2 border-gray-300 hover:border-purple-500 w-20 h-16 shadow-xl">
-        {die.number}
-      </button>
-    );
-  });
+  // Whenever the die is clicked toggle between die.froozen = "true/false"
+  function toggleFreeze(e) {
+    // each dice button has a value field that represents it's index in the dice array
+    let indexOfSelectedDie = parseInt(e.target.value);
+
+    let diceToToggle = dice.filter(
+      (die, index) => index == indexOfSelectedDie
+    )[0];
+
+    setDice((prevDice) => {
+      // iterates over each dice object
+      let newDice = prevDice.map((diceObject, index) => {
+        // toggle frozen for the diceObject that has the same index as the object we selected
+        if (index == indexOfSelectedDie) {
+          return {
+            ...diceObject,
+            frozen: true,
+          };
+        } else {
+          return {
+            ...diceObject,
+          };
+        }
+      });
+
+      return newDice;
+    });
+  }
+  // frozen: diceToToggle.frozen ? false : true,
 
   return (
     <main className="bg-slate-900 min-h-screen flex items-center justify-center">
@@ -60,13 +85,13 @@ function App() {
               current value between each roll
             </div>
           </div>
-          {/* dice component */}
-          <div className="flex justify-center">
-            <div className=" grid grid-rows-2 grid-cols-5 gap-10">
-              {diceElements}
-            </div>
-          </div>
-          {/* dice component */}
+
+          {/* Die Componenent  */}
+          <Dice
+            key={dice.length.toString()}
+            diceProp={dice}
+            toggleFreeze={toggleFreeze}
+          />
 
           <div className="flex justify-center">
             <button

@@ -9,6 +9,7 @@ The objective is to create a tenzies game using react. To win the game you must 
 - React
 - CSS
 - HTML
+- TailwindCSS
 - Netlify
 
 ## Lessons Learned
