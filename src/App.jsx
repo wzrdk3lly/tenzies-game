@@ -107,7 +107,7 @@ function App() {
       <div className="text-5xl font-bold flex justify-center ">Tenzies</div>
       <div className="text-2xl grid w-96 text-center">
         Freeze dice until they are all the same. Click each dice to freeze it at
-        its current value between each roll
+        its current value between each roll.
       </div>
     </div>
   );
