@@ -20,3 +20,5 @@ The objective is to create a tenzies game using react. To win the game you must 
 - unique ways to use the map function in order to manipulate the dice objects
 - The every javascript function
 - Conditional rendering specific game instructions
+
+## [Live Deployment](https://curious-sorbet-b80561.netlify.app/)
