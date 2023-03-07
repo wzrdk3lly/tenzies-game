@@ -2,6 +2,10 @@
 
 The objective is to create a tenzies game using react. To win the game you must freeze all of the dice until they are the same number
 
+## Preview
+
+![image](src/assets/preview.png)
+
 ## Tools used
 
 - Vite
